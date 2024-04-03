@@ -1,0 +1,1 @@
+Any file inside the public directory can be reached by the user
