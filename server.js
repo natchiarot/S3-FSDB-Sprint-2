@@ -1,4 +1,6 @@
 const express = require("express");
+// Load .env file into process.env
+require("dotenv").config();
 
 const PORT = 3000;
 global.DEBUG = true;
