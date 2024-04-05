@@ -1,2 +1,16 @@
-Index page for resumes/ <br />
-This could maybe redirect to resumes/search?
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+<main>
+    <h2>Resumé Search</h2>
+    <form action="/search" method="GET">
+        <label for="search">Search by keyword:</label>
+        <input type="text" id="search" name="search">
+        <select id="database" name="database">
+            <option value="PostgreSQL">PostgreSQL</option>
+            <option value="MonngoDB">MongoDB</option>
+            <option value="Both">Both</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+</main>
+<%- include('partials/footer') %>
