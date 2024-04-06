@@ -21,22 +21,57 @@ router.get("/", async (req, res) => {
 // GET to "resumes/search" expects a 'query' parameter containing words to search for.
 // For instance, resumes/search?query=node%20react
 router.get("/search", async (req, res) => {
-  // If there is no query, behaviour is different
-  if (!req.query.query) {
-    res.status(400).end("Query must include search query.");
-  } else {
-    try {
-      // Search query is separated by whitespace, split the query into an array
-      const terms = req.query.query.split(/\s+/);
+  try {
+    // Search query is separated by whitespace, split the query into an array
+    // (If there was no query, this quietly does nothing)
+    let terms;
+    if (req.query.query) terms = req.query.query.split(/\s+/);
 
-      const resumes = await pgDal.searchAllResumes(terms);
+    const resumes =
+      // Was a job specified?
+      req.query.job
+        ? // Were search terms specified?
+          req.query.query
+          ? await pgDal.searchResumesByJob(req.query.job, terms)
+          : await pgDal.getResumesByJob(req.query.job)
+        : // No job. Were search terms specified?
+        req.query.query
+        ? await pgDal.searchAllResumes(terms)
+        : await pgDal.getAllResumes();
 
-      res.render("resumesSearch", { query: req.query.query, resumes: resumes });
-    } catch (e) {
-      res
-        .status(503)
-        .end("There was an error when attempting to access the database: " + e);
-    }
+    // Which DAL function to use depends on the query
+
+    // if (req.query.job)
+    //   resumes = await pgDal.searchResumesByJob(
+    //     parseInt(req.query.job),
+    //     terms
+    //   );
+    // else resumes = await pgDal.searchAllResumes(terms);
+
+    res.render("resumeSearchResults", {
+      query: req.query.query,
+      resumes: resumes,
+    });
+  } catch (e) {
+    res
+      .status(503)
+      .end("There was an error when attempting to access the database: " + e);
+  }
+});
+
+// GET a specific resume
+router.get("/:id", async (req, res) => {
+  try {
+    const resume = await pgDal.getResume(req.params.id);
+
+    if (resume.length == 0)
+      throw new Error("Resume #" + req.params.id + " could not be found.");
+
+    res.render("resumeView", { resume: resume[0] });
+  } catch (e) {
+    res
+      .status(503)
+      .end("There was an error when attempting to access the database: " + e);
   }
 });
 
