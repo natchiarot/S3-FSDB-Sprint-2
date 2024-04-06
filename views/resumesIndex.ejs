@@ -1,2 +1,11 @@
-Index page for resumes/ <br />
-This could maybe redirect to resumes/search?
+Index page for resumes <br />
+<ul>
+  <% resumes.forEach(resume => { %>
+  <li>
+    #<%= resume.resume_id %> <%= resume.applicantname %><br />
+    <textarea style="width: 800px; height: 200px" disabled>
+<%= resume.resumetext %></textarea
+    >
+  </li>
+  <% } ) %>
+</ul>

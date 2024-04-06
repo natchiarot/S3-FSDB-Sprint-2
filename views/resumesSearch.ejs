@@ -1,1 +1,11 @@
-Search page for resumes. This could contain the form to fill in search results.
+Search results for '<%= query %>'':
+<ul>
+  <% resumes.forEach(resume => { %>
+  <li>
+    #<%= resume.resume_id %> <%= resume.applicantname %><br />
+    <textarea style="width: 800px; height: 200px" disabled>
+  <%= resume.resumetext %></textarea
+    >
+  </li>
+  <% } ) %>
+</ul>
