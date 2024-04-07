@@ -22,8 +22,8 @@ router.get("/", async (req, res) => {
 // For instance, resumes/search?query=node%20react
 router.get("/search", async (req, res) => {
   try {
-    // Search query is separated by whitespace, split the query into an array
-    // (If there was no query, this quietly does nothing)
+    // Search query is passed in as a plaintext string, with each term separated by whitespace
+    // Split the query into an array, if it exists
     let terms;
     if (req.query.query) terms = req.query.query.split(/\s+/);
 
