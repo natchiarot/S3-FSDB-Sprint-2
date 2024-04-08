@@ -44,7 +44,7 @@ router.get("/search", async (req, res) => {
     // filters object must be created based on the request.
     // When mongodb support is added, the 'database' value will differ
     let filters = { database: "pg" };
-    if (res.query.job) filters["job"] = res.query.job;
+    if (req.query.job) filters["job"] = req.query.job;
 
     logSearch(terms, filters);
 
