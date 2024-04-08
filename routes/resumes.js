@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const pgDal = require("../services/resumes.pg.dal");
+const { logSearch } = require("../services/searchlog.pg.js");
 
 // GET to "resumes/" renders a list of all resumes
 // In the future, this should instead display a form to get search terms from the user
@@ -24,7 +25,7 @@ router.get("/search", async (req, res) => {
   try {
     // Search query is passed in as a plaintext string, with each term separated by whitespace
     // Split the query into an array, if it exists
-    let terms;
+    let terms = [];
     if (req.query.query) terms = req.query.query.split(/\s+/);
 
     const resumes =
@@ -39,14 +40,13 @@ router.get("/search", async (req, res) => {
         ? await pgDal.searchAllResumes(terms)
         : await pgDal.getAllResumes();
 
-    // Which DAL function to use depends on the query
+    // After the relevant search has been performed (without error), log the search
+    // filters object must be created based on the request.
+    // When mongodb support is added, the 'database' value will differ
+    let filters = { database: "pg" };
+    if (res.query.job) filters["job"] = res.query.job;
 
-    // if (req.query.job)
-    //   resumes = await pgDal.searchResumesByJob(
-    //     parseInt(req.query.job),
-    //     terms
-    //   );
-    // else resumes = await pgDal.searchAllResumes(terms);
+    logSearch(terms, filters);
 
     res.render("resumeSearchResults", {
       query: req.query.query,

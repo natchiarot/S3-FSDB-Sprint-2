@@ -1,5 +1,5 @@
 const psql = require("./pg.auth");
-const { logSearch } = require("./searchlog.pg.js");
+// const { logSearch } = require("./searchlog.pg.js");
 
 // Function which simply returns every resume in the system
 const getAllResumes = async () => {
@@ -7,7 +7,7 @@ const getAllResumes = async () => {
 
   try {
     const result = await psql.query(query);
-    logSearch([], { database: "pg" });
+    // logSearch([], { database: "pg" });
 
     if (DEBUG)
       console.log(`getAllResumes: found ${result.rows.length} resumes`);
@@ -27,7 +27,7 @@ const getResumesByJob = async (jobId) => {
 
   try {
     const result = await psql.query(query, [jobId]);
-    logSearch([], { database: "pg", jobId: jobId });
+    // logSearch([], { database: "pg", jobId: jobId });
 
     if (DEBUG)
       console.log(
@@ -51,7 +51,7 @@ const searchAllResumes = async (terms) => {
   try {
     const result = await psql.query(query, [terms.join(" & ")]);
     // Log this postgres-based search
-    logSearch(terms, { database: "pg" });
+    // logSearch(terms, { database: "pg" });
 
     if (DEBUG)
       console.log(
@@ -80,7 +80,7 @@ const searchResumesByJob = async (jobId, terms) => {
   try {
     const result = await psql.query(query, [jobId, terms.join(" & ")]);
     // Log this postgres-based search
-    logSearch(terms, { database: "pg", jobId: jobId });
+    // logSearch(terms, { database: "pg", jobId: jobId });
 
     if (DEBUG)
       console.log(
