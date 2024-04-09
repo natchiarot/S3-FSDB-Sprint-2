@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PH Results</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Applicant_Search_Styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header">
+                <div class="titleblock">
+                    <h1 class="website-name">PrecisionHire Pro</h1>
+                    <blockquote class="slogan">“Not so many candidates, in even less time!”</blockquote>
+                </div>
+                <div class="btns-containerAnB">
+                    <div class="btns-containerA">
+                        <a href="#" class="btnA">Index</a> <!-- main -->
+                        <a href="#" class="btnA">Search</a>
+                        <!-- <a href="#" class="btnA">Results</a> -->
+                    </div>
+                    <div class="btns-containerB">
+                        <a href="#" class="btnB">Sign Up</a>
+                        <a href="#" class="btnB">Sign In</a>
+                        <a href="#" class="btnB">Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-section">
+            <div class="welcome-message">
+                <span>Welcome, <br>User!</span>
+            </div>
+        </div>
+
+    </header>
+
+    <div class="breadcrumb">
+        <a href="#" onclick="history.back(); return false;" style="color:#5a96ea;">&lt; Back</a>
+    </div>
+
+    <div class="outer-container">
+        <div class="inner-container">
+
+            <div class="search-criteria">
+
+                <h3>Search Criteria used:</h3>
+                <p>Keywords: <span id="keywords">example keyword</span></p>
+                <p>Database: <span id="database">MongoDB</span></p>
+                <!-- Additional criteria can be listed here -->
+                <h2>Search Query Results</h2>
+            </div>
+
+            <table class="custom-table">
+                <thead class="custom-thead">
+                    <tr>
+                        <th>Applicant Name</th>
+                        <th>Job Applied For</th>
+                        <th>Resume Link</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Applicant Name</th>
+                        <th>Job Applied For</th>
+                        <th>Resume Link</th>
+                        <th>Phone Number</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- the table is filled with meaningless sample data for display purposes only. 
+             -->
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <tr class="highlight-row">
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+                        <td>jane.doe@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>Jane Doe</td>
+                        <td>Marketing</td>
+                        <td>Manager</td>
+                        <td>2020-01-15</td>
+
+                    </tr>
+                    <!-- Additional rows -->
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footercontentA">
+            <div class="social-links">
+                <!-- <a href="https://www.facebook.com/" class="social-icon">
+                    <img src="Sprint2_S3_IMAGES/FacebookLogo.png" alt="Facebook">
+                </a>
+                <a href="https://www.instagram.com/" class="social-icon">
+                    <img src="Sprint2_S3_IMAGES/InstagramLogo.png" alt="Instagram">
+                </a>
+                <a href="https://twitter.com/home" class="social-icon">
+                    <img src="Sprint2_S3_IMAGES/TwitterLogo.png" alt="Twitter">
+                </a>
+                <a href="https://www.youtube.com/" class="social-icon">
+                    <img src="Sprint2_S3_IMAGES/YouTubeLogo.png" alt="Youtube">
+                </a> -->
+            </div>
+            <div class="copyright">
+                &copy; 2024 Money4Lifeforce Ltd. The rights of all are reserved.
+            </div>
+        </div>
+        <div class="footercontentB">
+            <div class="back-to-top">
+                <a href="#top" id="backToTopBtn">Back to Top</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- <script src="SPRINT2_Forum_script.js"></script> -->
+
+</body>
+
+</html>
