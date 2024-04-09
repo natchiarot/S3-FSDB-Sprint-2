@@ -1,0 +1,26 @@
+<<<<<<< HEAD <%- include('partials/head') %> <%- include('partials/nav') %>
+<main>
+  <h2>Resumé Search</h2>
+  <form action="/search" method="GET">
+    <label for="search">Search by keyword:</label>
+    <input type="text" id="search" name="search" />
+    <select id="database" name="database">
+      <option value="PostgreSQL">PostgreSQL</option>
+      <option value="MonngoDB">MongoDB</option>
+      <option value="Both">Both</option>
+    </select>
+    <button type="submit">Search</button>
+  </form>
+</main>
+<%- include('partials/footer') %> ======= Search results for '<%= query %>'':
+<ul>
+  <% resumes.forEach(resume => { %>
+  <li>
+    #<%= resume.resume_id %> <%= resume.applicantname %><br />
+    <textarea style="width: 800px; height: 200px" disabled>
+  <%= resume.resumetext %></textarea
+    >
+  </li>
+  <% } ) %>
+</ul>
+>>>>>>> fd5e810 (full text search (using unindexed vector))
