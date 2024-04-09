@@ -58,7 +58,7 @@ const createUser = async (
 const updateUser = async (id, data) => {
   try {
     // If the update data includes a password, replace the password with a hash of the password
-    if (data.password) data.password = await bcrypt.hash(password, 10);
+    if (data.password) data.password = await bcrypt.hash(data.password, 10);
 
     // Create a string containing all supplied data
     const fmtSet = Object.keys(data)
@@ -67,10 +67,14 @@ const updateUser = async (id, data) => {
 
     // Create a query using the given data
     // The data is also used to generate the list of parameters to give to the query
+    // I really hope Array.concat() is idempotent...
     const query = `UPDATE "User" SET ${fmtSet} WHERE user_id = $1`;
+
+    console.log(query);
+
     const result = await psql.query(
       query,
-      [id].push(data.map((key) => data[key]))
+      [id].concat(Object.keys(data).map((key) => data[key]))
     );
 
     return result;
@@ -84,7 +88,7 @@ const deleteUser = async (id) => {
   const query = 'DELETE FROM "User" WHERE user_id = $1';
 
   try {
-    const result = await psql.query(quert, [id]);
+    const result = await psql.query(query, [id]);
 
     return result;
   } catch (e) {
