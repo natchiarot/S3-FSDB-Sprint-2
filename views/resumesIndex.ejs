@@ -1,11 +1,21 @@
 Index page for resumes <br />
+<!-- <ul>
+  <% resumes.forEach(resume=> { %>
+    <li>
+      #<%= resume.resume_id %>
+        <%= resume.applicantname %><br />
+          <textarea style="width: 800px; height: 200px" disabled>
+<%= resume.resumetext %></textarea>
+    </li>
+    <% } ) %>
+</ul> -->
 <ul>
-  <% resumes.forEach(resume => { %>
-  <li>
-    #<%= resume.resume_id %> <%= resume.applicantname %><br />
-    <textarea style="width: 800px; height: 200px" disabled>
-<%= resume.resumetext %></textarea
-    >
-  </li>
-  <% } ) %>
+  <% resumes.forEach(resume=> { %>
+    <li>
+      #<%= resume.Resume.resume_id %>
+        <%= resume.Applicant.ApplicantName %><br />
+          <textarea style="width: 800px; height: 200px" disabled>
+<%= resume.Resume.ResumeText %></textarea>
+    </li>
+    <% } ) %>
 </ul>

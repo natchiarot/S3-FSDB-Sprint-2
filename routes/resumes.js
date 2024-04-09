@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
-const pgDal = require("../services/resumes.pg.dal");
-const { logSearch } = require("../services/searchlog.pg.js");
+const mDal = require("../services/m.resumes.dal");
+// const { logSearch } = require("../services/searchlog.pg.js");
 
 // GET to "resumes/" renders a list of all resumes
 // In the future, this should instead display a form to get search terms from the user
 router.get("/", async (req, res) => {
   // The DAL can potentially throw errors, handle them here with try/catch.
   try {
-    const resumes = await pgDal.getAllResumes();
+    const resumes = await mDal.getAllResumes();
 
     res.render("resumesIndex", { resumes: resumes });
   } catch (e) {
