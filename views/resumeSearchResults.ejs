@@ -1,4 +1,4 @@
-<<<<<<< HEAD <%- include('partials/head') %> <%- include('partials/nav') %>
+<<<<<<< HEAD <%- include('partials/head') %>
 <main>
   <h2>Resumé Search</h2>
   <form action="/search" method="GET">
@@ -12,7 +12,7 @@
     <button type="submit">Search</button>
   </form>
 </main>
-<%- include('partials/footer') %> ======= Search results for '<%= query %>'':
+ ======= Search results for '<%= query %>'':
 <ul>
   <% resumes.forEach(resume => { %>
   <li>
@@ -23,4 +23,5 @@
   </li>
   <% } ) %>
 </ul>
+<%- include('partials/foot') %>
 >>>>>>> fd5e810 (full text search (using unindexed vector))

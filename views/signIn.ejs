@@ -1,12 +1,26 @@
 <%- include('partials/head') %>
-<%- include('partials/nav') %>
 <main>
-    <h2>Sign In</h2>
-    <form action="/signIn" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
-        <button type="submit">Sign In</button>
-    </form>
+    <div class="outer-container1">
+        <div class="inner-container1">
+            <form action="/signin" method="post">
+                <div class="container">
+                    <h1>Sign In</h1>
+                    <hr>
+
+                    <label for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Enter username" name="username" required>
+
+                    <label for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="password" required>
+
+                    <button type="submit" class="registerbtn">Sign In</button>
+                </div>
+
+                <div class="signin">
+                    <p>Don't have an account? <a href="/signup" class="signin-link">Sign up</a>.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+<%- include('partials/foot') %>
 </main>
