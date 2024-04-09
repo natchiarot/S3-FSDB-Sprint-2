@@ -1,8 +1,8 @@
 const psql = require("./pg.auth");
 const bcrypt = require("bcrypt");
 
-// Looks for a user with the given id, and returns all data for them.
-// If there is no match, an empty list will be returned.
+// Reads a user with the given id, and returns all data for them.
+// If there is no matching user, an empty list will be returned.
 const getUserById = async (id) => {
   // This table's name must be written within quotes to clarify to postgres that we are not using the User keyword.
   const query = 'SELECT * FROM "User" WHERE user_id = $1';
@@ -21,27 +21,76 @@ const getUserById = async (id) => {
 };
 
 // Creates a new user based on the parameters given.
-// If successful, this will return
-const createUser = async (username, position, email, phone, location) => {
+// If successful, this will return the new user's id
+const createUser = async (
+  username,
+  password,
+  position,
+  email,
+  phone,
+  location
+) => {
   const query =
-    'INSERT INTO "User" (username, position, email, phone, location) VALUES ($1, $2, $3, $4, $5) RETURNING user_id';
+    'INSERT INTO "User" (username, password, position, email, phone, location) VALUES ($1, $2, $3, $4, $5, $6) RETURNING user_id';
 
   try {
     const hash = await bcrypt.hash(password, 10);
     // TODO: There is no password column in the database. Discuss database design before continuing.
     const result = await psql.query(query, [
       username,
+      hash,
       position,
       email,
       phone,
       location,
     ]);
 
-    return result.rows;
+    // The query returns the new user_id, which this function returns
+    return result.rows[0].user_id;
   } catch (e) {
     console.error(e);
     throw e;
   }
 };
 
-module.exports = { getUserById, createUser };
+// Updates an existing user. The user id must be supplied, as well as a 'data' object consisting of key/value pairs.
+// The keys must be an existing database column. If a password is given, it will first be hashed.
+const updateUser = async (id, data) => {
+  try {
+    // If the update data includes a password, replace the password with a hash of the password
+    if (data.password) data.password = await bcrypt.hash(password, 10);
+
+    // Create a string containing all supplied data
+    const fmtSet = Object.keys(data)
+      .map((key, index) => `"${key}"=$${index + 2}`)
+      .join(", ");
+
+    // Create a query using the given data
+    // The data is also used to generate the list of parameters to give to the query
+    const query = `UPDATE "User" SET ${fmtSet} WHERE user_id = $1`;
+    const result = await psql.query(
+      query,
+      [id].push(data.map((key) => data[key]))
+    );
+
+    return result;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+const deleteUser = async (id) => {
+  const query = 'DELETE FROM "User" WHERE user_id = $1';
+
+  try {
+    const result = await psql.query(quert, [id]);
+
+    return result;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+module.exports = { getUserById, createUser, updateUser, deleteUser };
