@@ -1,4 +1,5 @@
 const mdb = require("./m.auth");
+const { searchAllResumes } = require("./resumes.pg.dal");
 
 async function getAllResumes() {
   let client;
@@ -40,6 +41,53 @@ async function getResumesByJob(jobId) {
   }
 }
 
+async function searchAllResumesM(terms) {
+  try {
+    await mdb.connect();
+    // Creating the regex for the search terms, case insensitive
+    const regex = new RegExp(terms.join(" "), "i");
+
+    // Doing the search with regex
+    const result = await mdb
+      .db("ApplicantManagementDB")
+      .collection("Application")
+      .find({ "Resume.ResumeText": { $regex: regex } })
+      .toArray();
+
+    return result;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  } finally {
+    mdb.close();
+  }
+}
+
+async function searchResumesByJob(jobId, terms) {
+  try {
+    const regex = new RegExp(terms.join(" "), "i");
+    await mdb.connect();
+    const result = await mdb
+      .db("ApplicantManagementDB")
+      .collection("Application")
+      .find({ "Resume.ResumeText": { $regex: regex } })
+      .toArray();
+
+    if (DEBUG)
+      console.log(
+        `searchResumesByJob(${jobId}): found ${
+          result.length
+        } matches for '${terms.join(", ")}'`
+      );
+    return result;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  } finally {
+    mdb.close();
+  }
+}
+
 async function getResume(resumeIdString) {
   try {
     // The resume id had the data type string when it needed to have int for MongoDB
@@ -63,4 +111,10 @@ async function getResume(resumeIdString) {
   }
 }
 
-module.exports = { getAllResumes, getResumesByJob, getResume };
+module.exports = {
+  getAllResumes,
+  getResumesByJob,
+  searchAllResumesM,
+  searchResumesByJob,
+  getResume,
+};

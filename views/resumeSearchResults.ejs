@@ -1,6 +1,9 @@
-<<<<<<< HEAD <%- include('partials/head') %> <%- include('partials/nav') %>
-<main>
-  <h2>Resumé Search</h2>
+<%- include('partials/head') %>
+  <%- include('partials/nav') %>
+    <main>
+
+      <!-- For postgres -->
+      <!-- <h2>Resumé Search</h2>
   <form action="/search" method="GET">
     <label for="search">Search by keyword:</label>
     <input type="text" id="search" name="search" />
@@ -12,7 +15,7 @@
     <button type="submit">Search</button>
   </form>
 </main>
-<%- include('partials/footer') %> ======= Search results for '<%= query %>'':
+<%- include('partials/foot') %> ======= Search results for '<%= query %>'':
 <ul>
   <% resumes.forEach(resume => { %>
   <li>
@@ -22,5 +25,30 @@
     >
   </li>
   <% } ) %>
-</ul>
->>>>>>> fd5e810 (full text search (using unindexed vector))
+</ul> -->
+
+      <!-- For mongodb -->
+      <h2>Resumé Search</h2>
+      <form action="/search" method="GET">
+        <label for="search">Search by keyword:</label>
+        <input type="text" id="search" name="search" />
+        <select id="database" name="database">
+          <option value="PostgreSQL">PostgreSQL</option>
+          <option value="MongoDB">MongoDB</option>
+          <option value="Both">Both</option>
+        </select>
+        <button type="submit">Search</button>
+      </form>
+
+      Search results for '<%= query %>'':
+        <ul>
+          <% resumes.forEach(resume=> { %>
+            <li>
+              #<%= resume.Resume.Resume_Id %>
+                <%= resume.Applicant.ApplicantName %><br />
+                  <textarea style="width: 800px; height: 200px" disabled>
+      <%= resume.Resume.ResumeText %></textarea>
+            </li>
+            <% } ) %>
+        </ul>
+    </main>

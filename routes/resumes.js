@@ -33,20 +33,21 @@ router.get("/search", async (req, res) => {
       req.query.job
         ? // Were search terms specified?
           req.query.query
-          ? await pgDal.searchResumesByJob(req.query.job, terms)
-          : await pgDal.getResumesByJob(req.query.job)
+          ? await mDal.searchResumesByJob(req.query.job, terms)
+          : await mDal.getResumesByJob(req.query.job)
         : // No job. Were search terms specified?
         req.query.query
-        ? await pgDal.searchAllResumes(terms)
-        : await pgDal.getAllResumes();
+        ? await mDal.searchAllResumesM(terms)
+        : await mDal.getAllResumes();
 
     // After the relevant search has been performed (without error), log the search
     // filters object must be created based on the request.
     // When mongodb support is added, the 'database' value will differ
-    let filters = { database: "pg" };
-    if (req.query.job) filters["job"] = req.query.job;
 
-    logSearch(terms, filters);
+    // let filters = { database: "pg" };
+    // if (req.query.job) filters["job"] = req.query.job;
+
+    // logSearch(terms, filters);
 
     res.render("resumeSearchResults", {
       query: req.query.query,
