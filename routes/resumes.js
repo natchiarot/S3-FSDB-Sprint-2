@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
-const pgDal = require("../services/resumes.pg.dal");
-const { logSearch } = require("../services/searchlog.pg.js");
+const mDal = require("../services/m.resumes.dal");
+// const { logSearch } = require("../services/searchlog.pg.js");
 
 // GET to "resumes/" renders a list of all resumes
 // In the future, this should instead display a form to get search terms from the user
 router.get("/", async (req, res) => {
   // The DAL can potentially throw errors, handle them here with try/catch.
   try {
-    const resumes = await pgDal.getAllResumes();
+    const resumes = await mDal.getAllResumes();
 
     res.render("resumesIndex", { resumes: resumes });
   } catch (e) {
@@ -33,20 +33,21 @@ router.get("/search", async (req, res) => {
       req.query.job
         ? // Were search terms specified?
           req.query.query
-          ? await pgDal.searchResumesByJob(req.query.job, terms)
-          : await pgDal.getResumesByJob(req.query.job)
+          ? await mDal.searchResumesByJob(req.query.job, terms)
+          : await mDal.getResumesByJob(req.query.job)
         : // No job. Were search terms specified?
         req.query.query
-        ? await pgDal.searchAllResumes(terms)
-        : await pgDal.getAllResumes();
+        ? await mDal.searchAllResumes(terms)
+        : await mDal.getAllResumes();
 
     // After the relevant search has been performed (without error), log the search
     // filters object must be created based on the request.
     // When mongodb support is added, the 'database' value will differ
-    let filters = { database: "pg" };
-    if (req.query.job) filters["job"] = req.query.job;
 
-    logSearch(terms, filters);
+    // let filters = { database: "pg" };
+    // if (req.query.job) filters["job"] = req.query.job;
+
+    // logSearch(terms, filters);
 
     res.render("resumeSearchResults", {
       query: req.query.query,
@@ -62,12 +63,19 @@ router.get("/search", async (req, res) => {
 // GET a specific resume
 router.get("/:id", async (req, res) => {
   try {
-    const resume = await pgDal.getResume(req.params.id);
+    const resume = await mDal.getResume(req.params.id);
+
+    // Log the resume object
+    if (DEBUG) console.log("Resume object:", resume);
 
     if (resume.length == 0)
       throw new Error("Resume #" + req.params.id + " could not be found.");
 
-    res.render("resumeView", { resume: resume[0] });
+    // For postgres this is how it is:
+    // res.render("resumeView", { resume: resume[0] });
+
+    // For MongoDB it has to be like this:
+    res.render("resumeView", { resume });
   } catch (e) {
     res
       .status(503)
