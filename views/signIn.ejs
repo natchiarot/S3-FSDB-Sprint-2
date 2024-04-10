@@ -1,12 +1,11 @@
 <%- include('partials/head') %>
 <main>
-    <div class="outer-container1">
-        <div class="inner-container1">
+    <div class="outer-container">
+        <div class="inner-container">
             <form action="/signin" method="post">
                 <div class="container">
                     <h1>Sign In</h1>
                     <hr>
-
                     <label for="username"><b>Username</b></label>
                     <input type="text" placeholder="Enter username" name="username" required>
 
@@ -17,10 +16,10 @@
                 </div>
 
                 <div class="signin">
-                    <p>Don't have an account? <a href="/signup" class="signin-link">Sign up</a>.</p>
+                    <p>Don't have an account? <a href="/users/signUp" class="signin-link">Sign up</a>.</p>
                 </div>
             </form>
         </div>
     </div>
-<%- include('partials/foot') %>
 </main>
+<%- include('partials/foot') %>

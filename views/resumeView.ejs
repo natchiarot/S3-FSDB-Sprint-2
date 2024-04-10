@@ -1,7 +1,7 @@
 <%- include('partials/head') %>
 
-<div class="outer-container2">
-  <div class="inner-container2">
+<div class="outer-container">
+  <div class="inner-container1">
 
       <div class="search-criteria">
 
@@ -14,11 +14,10 @@
 
 
       <h2>Resume data of applicant:</h2> <!--if we could easily add the applicants name here that be cool-->
-      <textarea id="resumedata">
+      <textarea id="resumedata" width="800px" height="400px">
         <ul>
           <li>
             Resume #<%= resume.resume_id %> for <%= resume.applicantname %><br />
-            <textarea style="width: 800px; height: 200px" disabled>
           <%= resume.resumetext %></textarea
             >
           </li>

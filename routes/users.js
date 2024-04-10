@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
     try {
         // const users = await pgDal.getAllUsers();
-        res.render("usersIndex", { users: users });
+        res.render("signIn");
     } catch (e) {
         res
         .status(503)
@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 router.get("/signIn", async (req, res) => {
     try {
         // const users = await pgDal.getAllUsers();
-        res.render("signIn", { users: users });
+        res.render("signIn");
     } catch (e) {
         res
         .status(503)
@@ -28,7 +28,7 @@ router.get("/signIn", async (req, res) => {
 router.get("/signUp", async (req, res) => {
     try {
         // const users = await pgDal.getAllUsers();
-        res.render("signUp", { users: users });
+        res.render("signUp");
     } catch (e) {
         res
         .status(503)

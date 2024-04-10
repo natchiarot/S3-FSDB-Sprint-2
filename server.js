@@ -25,7 +25,15 @@ const usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("signIn");
+});
+
+app.get("/signIn", (req, res) => {
+  res.render("signIn");
+});
+
+app.get("/signUp", (req, res) => {
+  res.render("signUp");
 });
 
 // As a last resort, respond to unmatched routes with a 404

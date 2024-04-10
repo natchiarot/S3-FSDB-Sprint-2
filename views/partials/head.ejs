@@ -6,7 +6,7 @@
     <title>Keyin-SD9-S3-FSDB-FinalSprint</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <header>
@@ -18,26 +18,26 @@
                 </div>
                 <div class="btns-containerAnB">
                     <div class="btns-containerA">
-                        <% if (false) { %>
-                            <a href="/index" class="btnA">Index</a>
-                            <a href="/search" class="btnA">Search</a>
+                        <% if (true) { %>
+                            <a href="/" class="btnA">Home</a>
+                            <a href="/resumes" class="btnA">Search</a>
                             <a href="/logout" class="btnA">Log Out</a>
                         <% } else { %>
-                            <a href="/signUp" class="btnA">Sign Up</a>
-                            <a href="/signIn" class="btnA">Sign In</a>
+                            <a href="/" class="btnA">Home</a>
+                            <a href="signUp" class="btnA">Sign Up</a>
+                            <a href="signIn" class="btnA">Sign In</a>
                         <% } %>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="user-section">
-            <div class="welcome-message">
-                <% if (false) { %>
-                    <span>Welcome, <br><% username %></span>
-                <% } else { %>
-                    <span>Not signed in.</span>
-                <% } %>
+            <div class="user-section">
+                <div class="welcome-message">
+                    <% if (true) { %>
+                        <span>Welcome,<br>Username</span>
+                    <% } else { %>
+                        <span>Not signed in.</span>
+                    <% } %>
+                </div>
             </div>
         </div>
     </header>
