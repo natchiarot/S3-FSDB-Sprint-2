@@ -1,38 +1,21 @@
 <%- include('partials/head') %>
 <main>
-    <div class="outer-container">
-        <div class="inner-container">
-            <form action="/search" method="get"> <!-- Update action attribute as needed -->
-                <div class="search-query">
-                    <h3>Search Query</h3>
-                    <br>
-                    <label for="search-input">Please input keywords to search. (Not-Optional)</label>
-                    <input type="text" id="search-input" name="search" placeholder="term1, term2, etc." required
-                        aria-label="Search">
-                </div>
-                <br>
-                <div class="search-filters">
-
-
-                    <label for="job-id-input">Please input job_ID to search. (Optional)</label>
-                    <input type="text" id="job-id-input" name="jobId" placeholder="Enter job_ID">
-
-                    <br><br>
-
-                    <label for="sort-select">Select source database:</label>
-                    <select id="sort-select" name="sort">
-                        <option value="MongoDB">MongoDB</option>
-                        <option value="Postgres">Postgres</option>
-                        <option value="Both">Both databases</option>
-                        <!-- Add more sorting options as needed -->
-                    </select>
-                </div>
-
-                <br>
-
-                <center><button type="submit" class="registerbtn">Search</button></center>
-            </form>
-        </div>
+  <div class="outer-container">
+    <div class="inner-container1">
+      <div class="inco1">
+        <h2>Resumé Search</h2>
+        <form action="/search" method="GET">
+            <label for="search">Search by keyword:</label>
+            <input type="text" id="search" name="search">
+            <select id="database" name="database">
+                <option value="PostgreSQL">PostgreSQL</option>
+                <option value="MongoDB">MongoDB</option>
+                <option value="Both">Both</option>
+            </select>
+            <button type="submit">Search</button>
+        </form>
+      </div>
     </div>
+  </div>
 </main>
 <%- include('partials/foot') %>
