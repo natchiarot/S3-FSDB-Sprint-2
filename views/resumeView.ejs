@@ -1,8 +1,18 @@
-<ul>
+<!-- postgres -->
+<!-- <ul>
   <li>
     Resume #<%= resume.resume_id %> for <%= resume.applicantname %><br />
     <textarea style="width: 800px; height: 200px" disabled>
   <%= resume.resumetext %></textarea
     >
+  </li>
+</ul> -->
+
+<ul>
+  <li>
+    Resume #<%= resume.Resume.Resume_Id %> for <%= resume.Applicant.ApplicantName %><br />
+        <textarea style="width: 800px; height: 200px" disabled>
+      <%= resume.Resume.ResumeText %>
+    </textarea>
   </li>
 </ul>

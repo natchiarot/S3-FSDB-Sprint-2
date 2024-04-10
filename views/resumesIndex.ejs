@@ -9,10 +9,12 @@ Index page for resumes <br />
     </li>
     <% } ) %>
 </ul> -->
+
+<!-- For the mongodb resumes from application collection -->
 <ul>
   <% resumes.forEach(resume=> { %>
     <li>
-      #<%= resume.Resume.resume_id %>
+      #<%= resume.Resume.Resume_Id %>
         <%= resume.Applicant.ApplicantName %><br />
           <textarea style="width: 800px; height: 200px" disabled>
 <%= resume.Resume.ResumeText %></textarea>

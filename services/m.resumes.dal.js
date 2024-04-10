@@ -1,4 +1,3 @@
-const { ObjectId } = require("mongodb");
 const mdb = require("./m.auth");
 
 async function getAllResumes() {
@@ -41,4 +40,27 @@ async function getResumesByJob(jobId) {
   }
 }
 
-module.exports = { getAllResumes, getResumesByJob };
+async function getResume(resumeIdString) {
+  try {
+    // The resume id had the data type string when it needed to have int for MongoDB
+    const resumeId = parseInt(resumeIdString, 10);
+
+    console.log;
+    await mdb.connect();
+    if (DEBUG) console.log("resumeId: " + resumeId);
+    const result = await mdb
+      .db("ApplicantManagementDB")
+      .collection("Application")
+      .findOne({ "Resume.Resume_Id": resumeId });
+    if (DEBUG)
+      console.log(`getResume(${resumeId}): found ${result ? 1 : 0} matches`);
+    return result;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  } finally {
+    mdb.close();
+  }
+}
+
+module.exports = { getAllResumes, getResumesByJob, getResume };

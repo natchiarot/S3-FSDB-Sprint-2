@@ -62,12 +62,19 @@ router.get("/search", async (req, res) => {
 // GET a specific resume
 router.get("/:id", async (req, res) => {
   try {
-    const resume = await pgDal.getResume(req.params.id);
+    const resume = await mDal.getResume(req.params.id);
+
+    // Log the resume object
+    if (DEBUG) console.log("Resume object:", resume);
 
     if (resume.length == 0)
       throw new Error("Resume #" + req.params.id + " could not be found.");
 
-    res.render("resumeView", { resume: resume[0] });
+    // For postgres this is how it is:
+    // res.render("resumeView", { resume: resume[0] });
+
+    // For MongoDB it has to be like this:
+    res.render("resumeView", { resume });
   } catch (e) {
     res
       .status(503)
