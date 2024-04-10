@@ -37,7 +37,7 @@ router.get("/search", async (req, res) => {
           : await mDal.getResumesByJob(req.query.job)
         : // No job. Were search terms specified?
         req.query.query
-        ? await mDal.searchAllResumesM(terms)
+        ? await mDal.searchAllResumes(terms)
         : await mDal.getAllResumes();
 
     // After the relevant search has been performed (without error), log the search

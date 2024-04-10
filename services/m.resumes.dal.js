@@ -1,5 +1,4 @@
 const mdb = require("./m.auth");
-const { searchAllResumes } = require("./resumes.pg.dal");
 
 async function getAllResumes() {
   let client;
@@ -25,14 +24,17 @@ async function getAllResumes() {
   }
 }
 
-async function getResumesByJob(jobId) {
+async function getResumesByJob(jobIdString) {
   try {
+    const jobId = parseInt(jobIdString);
     await mdb.connect();
     const result = await mdb
       .db("ApplicantManagementDB")
       .collection("Application")
       .findOne({ "Job.Job_Id": jobId });
-    return result;
+    // Returns the result in an array of the result (so it can work the same as the other functions with forEach)
+    // If the result is null the array is returned empty
+    return result ? [result] : [];
   } catch (e) {
     console.log(e);
     throw e;
@@ -41,7 +43,7 @@ async function getResumesByJob(jobId) {
   }
 }
 
-async function searchAllResumesM(terms) {
+async function searchAllResumes(terms) {
   try {
     await mdb.connect();
     // Creating the regex for the search terms, case insensitive
@@ -63,14 +65,20 @@ async function searchAllResumesM(terms) {
   }
 }
 
-async function searchResumesByJob(jobId, terms) {
+async function searchResumesByJob(jobIdString, terms) {
   try {
+    const jobId = parseInt(jobIdString);
     const regex = new RegExp(terms.join(" "), "i");
     await mdb.connect();
     const result = await mdb
       .db("ApplicantManagementDB")
       .collection("Application")
-      .find({ "Resume.ResumeText": { $regex: regex } })
+      .find({
+        $and: [
+          { "Resume.ResumeText": { $regex: regex } },
+          { "Job.Job_Id": jobId },
+        ],
+      })
       .toArray();
 
     if (DEBUG)
@@ -91,7 +99,7 @@ async function searchResumesByJob(jobId, terms) {
 async function getResume(resumeIdString) {
   try {
     // The resume id had the data type string when it needed to have int for MongoDB
-    const resumeId = parseInt(resumeIdString, 10);
+    const resumeId = parseInt(resumeIdString);
 
     console.log;
     await mdb.connect();
@@ -114,7 +122,7 @@ async function getResume(resumeIdString) {
 module.exports = {
   getAllResumes,
   getResumesByJob,
-  searchAllResumesM,
+  searchAllResumes,
   searchResumesByJob,
   getResume,
 };
