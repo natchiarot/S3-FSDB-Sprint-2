@@ -1,8 +1,31 @@
-<ul>
-  <li>
-    Resume #<%= resume.resume_id %> for <%= resume.applicantname %><br />
-    <textarea style="width: 800px; height: 200px" disabled>
-  <%= resume.resumetext %></textarea
-    >
-  </li>
-</ul>
+<%- include('partials/head') %>
+
+<div class="outer-container2">
+  <div class="inner-container2">
+
+      <div class="search-criteria">
+
+          <h3>Search Criteria used:</h3>
+          <p>Keywords: <span id="keywords">example keyword</span></p>
+          <p>Database: <span id="database">MongoDB</span></p>
+          <!-- Additional criteria can be listed here -->
+
+      </div>
+
+
+      <h2>Resume data of applicant:</h2> <!--if we could easily add the applicants name here that be cool-->
+      <textarea id="resumedata">
+        <ul>
+          <li>
+            Resume #<%= resume.resume_id %> for <%= resume.applicantname %><br />
+            <textarea style="width: 800px; height: 200px" disabled>
+          <%= resume.resumetext %></textarea
+            >
+          </li>
+        </ul>
+      </textarea>
+
+  </div>
+</div>
+
+<%- include('partials/foot') %>
