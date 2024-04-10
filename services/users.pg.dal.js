@@ -70,8 +70,6 @@ const updateUser = async (id, data) => {
     // I really hope Array.concat() is idempotent...
     const query = `UPDATE "User" SET ${fmtSet} WHERE user_id = $1`;
 
-    console.log(query);
-
     const result = await psql.query(
       query,
       [id].concat(Object.keys(data).map((key) => data[key]))
