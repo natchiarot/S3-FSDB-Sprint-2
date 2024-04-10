@@ -33,7 +33,7 @@ async function getResumesByJob(jobIdString) {
       .collection("Application")
       .findOne({ "Job.Job_Id": jobId });
     // Returns the result in an array of the result (so it can work the same as the other functions with forEach)
-    // If the result is null the array is returned empty
+    // If the result is null returns an empty array
     return result ? [result] : [];
   } catch (e) {
     console.log(e);
