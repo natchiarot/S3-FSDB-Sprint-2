@@ -3,29 +3,30 @@
   <div class="outer-container">
     <div class="inner-container1">
       <h2>Resumé Search</h2>
-      <form action="/search" method="GET">
+      <form action="/resumes/search" method="GET">
         <label for="search">Search by keyword:</label>
-        <input type="text" id="search" name="search" />
-        <select id="database" name="database">
-          <option value="PostgreSQL">PostgreSQL</option>
-          <option value="MonngoDB">MongoDB</option>
-          <option value="Both">Both</option>
+        <input type="text" id="search" name="query" />
+        <select id="database" name="target">
+          <option value="pg">PostgreSQL</option>
+          <option value="m">MongoDB</option>
+          <option value="all">Both</option>
         </select>
         <button type="submit">Search</button>
       </form>
+
+      <%= resumes.length %> results for '<%= query %>':
+      <ul>
+        <% resumes.forEach(resume => { %>
+        <li>
+          #<%= resume.resume_id %> <%= resume.applicantname %> (source: <%=
+          resume.source %>)<br />
+          <textarea style="width: 800px; height: 200px" disabled>
+<%= resume.resumetext %></textarea
+          >
+        </li>
+        <% } ) %>
+      </ul>
     </div>
   </div>
 </main>
-
-======= Search results for '<%= query %>'':
-<ul>
-  <% resumes.forEach(resume => { %>
-  <li>
-    #<%= resume.resume_id %> <%= resume.applicantname %><br />
-    <textarea style="width: 800px; height: 200px" disabled>
-  <%= resume.resumetext %></textarea
-    >
-  </li>
-  <% } ) %>
-</ul>
 <%- include('partials/foot') %>
