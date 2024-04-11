@@ -2,62 +2,81 @@ const express = require("express");
 const router = express.Router();
 
 const mDal = require("../services/m.resumes.dal");
-// const { logSearch } = require("../services/searchlog.pg.js");
+const pgDal = require("../services/resumes.pg.dal");
+const { logSearch } = require("../services/searchlog.pg.js");
 
-// GET to "resumes/" renders a list of all resumes
-// In the future, this should instead display a form to get search terms from the user
+// GET to "resumes/" renders a form to search for resumes
 router.get("/", async (req, res) => {
-  // The DAL can potentially throw errors, handle them here with try/catch.
-  try {
-    const resumes = await mDal.getAllResumes();
-
-    res.render("resumesIndex", { resumes: resumes });
-  } catch (e) {
-    res
-      .status(503)
-      .end("There was an error when attempting to access the database: " + e);
-  }
+  res.render("resumesIndex");
 });
 
 // GET to "resumes/search" expects a 'query' parameter containing words to search for.
 // For instance, resumes/search?query=node%20react
 router.get("/search", async (req, res) => {
-  try {
-    // Search query is passed in as a plaintext string, with each term separated by whitespace
-    // Split the query into an array, if it exists
-    let terms = [];
-    if (req.query.query) terms = req.query.query.split(/\s+/);
+  // If no database was specified, redirect to resumes index
+  if (!req.query.target) res.redirect("/");
+  // If no search terms or job id were specified, redirect to resumes index
+  else if (!req.query.query && !req.query.job) res.redirect("/");
+  else
+    try {
+      // Search query is passed in as a plaintext string, with each term separated by whitespace
+      // Split the query into an array, if it exists
+      let terms = [];
+      if (req.query.query) terms = req.query.query.split(/\s+/);
 
-    const resumes =
-      // Was a job specified?
-      req.query.job
-        ? // Were search terms specified?
-          req.query.query
-          ? await mDal.searchResumesByJob(req.query.job, terms)
-          : await mDal.getResumesByJob(req.query.job)
-        : // No job. Were search terms specified?
-        req.query.query
-        ? await mDal.searchAllResumes(terms)
-        : await mDal.getAllResumes();
+      let resumes = [];
 
-    // After the relevant search has been performed (without error), log the search
-    // filters object must be created based on the request.
-    // When mongodb support is added, the 'database' value will differ
+      // First, handle Postgres searches
+      if (req.query.target == "pg" || req.query.target == "all") {
+        // DAL functions return arrays - therefore, we can push DAL results onto the resumes array
+        resumes = resumes.concat(
+          // Was a job specified?
+          req.query.job
+            ? // Were search terms specified?
+              req.query.query
+              ? await pgDal.searchResumesByJob(req.query.job, terms)
+              : await pgDal.getResumesByJob(req.query.job)
+            : // No job. Search terms must have been specified.
+              await pgDal.searchAllResumes(terms)
+        );
+      }
 
-    // let filters = { database: "pg" };
-    // if (req.query.job) filters["job"] = req.query.job;
+      // Then, handle MongoDB searches
+      if (req.query.target == "m" || req.query.target == "all") {
+        // DAL functions return arrays - therefore, we can push DAL results onto the resumes array
+        resumes = resumes.concat(
+          // Was a job specified?
+          req.query.job
+            ? // Were search terms specified?
+              req.query.query
+              ? await mDal.searchResumesByJob(req.query.job, terms)
+              : await mDal.getResumesByJob(req.query.job)
+            : // No job. Search terms must have been specified.
+              await mDal.searchAllResumes(terms)
+        );
+      }
 
-    // logSearch(terms, filters);
+      // After the search has been performed (without error), log the search
+      // filters object must be created based on the request.
 
-    res.render("resumeSearchResults", {
-      query: req.query.query,
-      resumes: resumes,
-    });
-  } catch (e) {
-    res
-      .status(503)
-      .end("There was an error when attempting to access the database: " + e);
-  }
+      // There will always be a 'target' filter, but the 'job' filter is optional
+      let filters = { target: req.query.target };
+      if (req.query.job) filters["job"] = req.query.job;
+
+      logSearch(terms, filters);
+
+      // temp
+      console.log(resumes);
+
+      res.render("resumeSearchResults", {
+        query: req.query.query,
+        resumes: resumes,
+      });
+    } catch (e) {
+      res
+        .status(503)
+        .end("There was an error when attempting to access the database: " + e);
+    }
 });
 
 // GET a specific resume

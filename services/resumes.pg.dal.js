@@ -10,7 +10,12 @@ const getAllResumes = async () => {
     // logSearch([], { database: "pg" });
 
     if (DEBUG)
-      console.log(`getAllResumes: found ${result.rows.length} resumes`);
+      console.log(`pg getAllResumes: found ${result.rows.length} resumes`);
+
+    // Append the data source as a property of each row
+    result.rows = result.rows.map((row) => {
+      return { ...row, source: "pg" };
+    });
 
     return result.rows;
   } catch (e) {
@@ -31,8 +36,13 @@ const getResumesByJob = async (jobId) => {
 
     if (DEBUG)
       console.log(
-        `getResumesByJob(${jobId}): found ${result.rows.length} resumes`
+        `pg getResumesByJob(${jobId}): found ${result.rows.length} resumes`
       );
+
+    // Append the data source as a property of each row
+    result.rows = result.rows.map((row) => {
+      return { ...row, source: "pg" };
+    });
 
     return result.rows;
   } catch (e) {
@@ -55,10 +65,15 @@ const searchAllResumes = async (terms) => {
 
     if (DEBUG)
       console.log(
-        `searchAllResumes: found ${
+        `pg searchAllResumes: found ${
           result.rows.length
         } matches for '${terms.join(", ")}'`
       );
+
+    // Append the data source as a property of each row
+    result.rows = result.rows.map((row) => {
+      return { ...row, source: "pg" };
+    });
 
     return result.rows;
   } catch (e) {
@@ -84,10 +99,15 @@ const searchResumesByJob = async (jobId, terms) => {
 
     if (DEBUG)
       console.log(
-        `searchResumesByJob(${jobId}): found ${
+        `pg searchResumesByJob(${jobId}): found ${
           result.rows.length
         } matches for '${terms.join(", ")}'`
       );
+
+    // Append the data source as a property of each row
+    result.rows = result.rows.map((row) => {
+      return { ...row, source: "pg" };
+    });
 
     return result.rows;
   } catch (e) {
@@ -106,7 +126,7 @@ const getResume = async (resumeId) => {
 
     if (DEBUG)
       console.log(
-        `getResume(${resumeId}): found ${result.rows.length} matches`
+        `pg getResume(${resumeId}): found ${result.rows.length} matches`
       );
 
     return result.rows;
