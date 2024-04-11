@@ -65,9 +65,6 @@ router.get("/search", async (req, res) => {
 
       logSearch(terms, filters);
 
-      // temp
-      console.log(resumes);
-
       res.render("resumeSearchResults", {
         query: req.query.query,
         resumes: resumes,
