@@ -12,7 +12,14 @@ async function getAllResumes() {
       .aggregate([])
       .toArray();
     if (DEBUG) console.log(`getAllResumes: found ${result.length} resumes`);
-    return result;
+
+    const finalResult = {
+      resume_id: result.resume.resume_id,
+      applicantname: result.applicant.applicantname,
+      resumetext: result.resume.resumetext,
+    };
+
+    return finalResult;
   } catch (e) {
     console.log(e);
     throw e;
@@ -31,10 +38,23 @@ async function getResumesByJob(jobIdString) {
     const result = await mdb
       .db("ApplicantManagementDB")
       .collection("Application")
-      .findOne({ "Job.Job_Id": jobId });
-    // Returns the result in an array of the result (so it can work the same as the other functions with forEach)
+      .findOne({ "job.job_id": jobId });
+
+    if (DEBUG) console.log("Result: ", result);
+
     // If the result is null returns an empty array
-    return result ? [result] : [];
+    if (!result) {
+      return [];
+    }
+
+    const finalResult = {
+      resume_id: result.resume.resume_id,
+      applicantname: result.applicant.applicantname,
+      resumetext: result.resume.resumetext,
+    };
+
+    // Returns the final result in an array of the final result (so it can work the same as the other functions with forEach)
+    return [finalResult];
   } catch (e) {
     console.log(e);
     throw e;
@@ -53,10 +73,16 @@ async function searchAllResumes(terms) {
     const result = await mdb
       .db("ApplicantManagementDB")
       .collection("Application")
-      .find({ "Resume.ResumeText": { $regex: regex } })
+      .find({ "resume.resumetext": { $regex: regex } })
       .toArray();
 
-    return result;
+    const finalResult = result.map((item) => ({
+      resume_id: item.resume.resume_id,
+      applicantname: item.applicant.applicantname,
+      resumetext: item.resume.resumetext,
+    }));
+
+    return finalResult;
   } catch (e) {
     console.log(e);
     throw e;
@@ -75,8 +101,8 @@ async function searchResumesByJob(jobIdString, terms) {
       .collection("Application")
       .find({
         $and: [
-          { "Resume.ResumeText": { $regex: regex } },
-          { "Job.Job_Id": jobId },
+          { "resume.resumetext": { $regex: regex } },
+          { "job.job_id": jobId },
         ],
       })
       .toArray();
@@ -87,7 +113,14 @@ async function searchResumesByJob(jobIdString, terms) {
           result.length
         } matches for '${terms.join(", ")}'`
       );
-    return result;
+
+    const finalResult = result.map((item) => ({
+      resume_id: item.resume.resume_id,
+      applicantname: item.applicant.applicantname,
+      resumetext: item.resume.resumetext,
+    }));
+
+    return finalResult;
   } catch (e) {
     console.log(e);
     throw e;
@@ -107,10 +140,15 @@ async function getResume(resumeIdString) {
     const result = await mdb
       .db("ApplicantManagementDB")
       .collection("Application")
-      .findOne({ "Resume.Resume_Id": resumeId });
-    if (DEBUG)
-      console.log(`getResume(${resumeId}): found ${result ? 1 : 0} matches`);
-    return result;
+      .findOne({ "resume.resume_id": resumeId });
+    if (DEBUG) console.log(`getResume(${resumeId}): found ${result} matches`);
+
+    const finalResult = {
+      resume_id: result.resume.resume_id,
+      applicantname: result.applicant.applicantname,
+      resumetext: result.resume.resumetext,
+    };
+    return finalResult;
   } catch (e) {
     console.log(e);
     throw e;
