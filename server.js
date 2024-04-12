@@ -28,7 +28,7 @@ app.use(
   })
 );
 
-// Some data from the user session must be exposed as locals so it can be rendered by EJS
+// Some data from the user session must be exposed as template locals so it can be rendered by EJS
 app.use((req, res, next) => {
   res.locals.loggedIn = req.session.loggedIn || false;
   res.locals.user_id = req.session.user_id || -1;
