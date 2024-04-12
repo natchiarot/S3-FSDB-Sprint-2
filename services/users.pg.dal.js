@@ -13,7 +13,31 @@ const getUserById = async (id) => {
     if (DEBUG)
       console.log(`getUserById(${id}): ${result.rowCount} matches found`);
 
-    return result.rows;
+    if (result.rows.length > 0) return result.rows[0];
+    else return [];
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
+// Reads a user with the given username, and returns all data for them.
+// If there is no matching user, an empty list will be returned.
+// Note that the username is case sensitive
+const getUserByUsername = async (username) => {
+  // This table's name must be written within quotes to clarify to postgres that we are not using the User keyword.
+  const query = 'SELECT * FROM "User" WHERE USERNAME LIKE $1';
+
+  try {
+    const result = await psql.query(query, [username]);
+
+    if (DEBUG)
+      console.log(
+        `getUserByUsername(${username}): ${result.rowCount} matches found`
+      );
+
+    if (result.rows.length > 0) return result.rows[0];
+    else return [];
   } catch (e) {
     console.error(e);
     throw e;
@@ -95,4 +119,10 @@ const deleteUser = async (id) => {
   }
 };
 
-module.exports = { getUserById, createUser, updateUser, deleteUser };
+module.exports = {
+  getUserById,
+  getUserByUsername,
+  createUser,
+  updateUser,
+  deleteUser,
+};

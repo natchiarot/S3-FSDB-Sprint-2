@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Keyin-SD9-S3-FSDB-FinalSprint</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
     <header>
-        <div class="header-container">
-            <div class="header">
-                <div class="titleblock">
-                    <h1 class="website-name">PrecisionHire Pro</h1>
-                    <blockquote class="slogan">“Welcome to efficient hiring!”</blockquote>
-                </div>
-                <div class="btns-containerAnB">
-                    <div class="btns-containerA">
-                        <% if (true) { %>
-                            <a href="/" class="btnA">Home</a>
-                            <a href="/resumes" class="btnA">Search</a>
-                            <a href="/logout" class="btnA">Log Out</a>
-                        <% } else { %>
-                            <a href="/" class="btnA">Home</a>
-                            <a href="signUp" class="btnA">Sign Up</a>
-                            <a href="signIn" class="btnA">Sign In</a>
-                        <% } %>
-                    </div>
-                </div>
+      <div class="header-container">
+        <div class="header">
+          <div class="titleblock">
+            <h1 class="website-name">PrecisionHire Pro</h1>
+            <blockquote class="slogan">
+              “Welcome to efficient hiring!”
+            </blockquote>
+          </div>
+          <div class="btns-containerAnB">
+            <div class="btns-containerA">
+              <% if (loggedIn) { %>
+              <a href="/" class="btnA">Home</a>
+              <a href="/resumes" class="btnA">Search</a>
+              <a href="/users/logout" class="btnA">Log Out</a>
+              <% } else { %>
+              <a href="/" class="btnA">Home</a>
+              <a href="/users/signUp" class="btnA">Sign Up</a>
+              <a href="/users" class="btnA">Sign In</a>
+              <% } %>
             </div>
-            <div class="user-section">
-                <div class="welcome-message">
-                    <% if (true) { %>
-                        <span>Welcome,<br>Username</span>
-                    <% } else { %>
-                        <span>Not signed in.</span>
-                    <% } %>
-                </div>
-            </div>
+          </div>
         </div>
+        <div class="user-section">
+          <div class="welcome-message">
+            <% if (loggedIn) { %>
+            <span
+              >Welcome,<br /><span class="loggedInUsername"
+                ><%= username %></span
+              ></span
+            >
+            <% } else { %>
+            <span>Not signed in.</span>
+            <% } %>
+          </div>
+        </div>
+      </div>
     </header>
+  </body>
+</html>

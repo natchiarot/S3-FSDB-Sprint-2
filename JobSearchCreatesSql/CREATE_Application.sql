@@ -10,14 +10,14 @@ CREATE TABLE Application (
 );
 
 -- Mock data inserts:
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 28, 83, 83, 15);
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 23, 84, 84, 15);
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 5, 90, 90, 12);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 28, 83, 83, 5);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 23, 84, 84, 5);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 5, 90, 90, 2);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 37, 58, 58, 3);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 26, 67, 67, 5);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 28, 1, 1, 9);
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 42, 60, 60, 15);
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 14, 99, 99, 13);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 42, 60, 60, 5);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 14, 99, 99, 3);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 27, 31, 31, 2);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 5, 102, 102, 7);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Under Review', 7, 39, 39, 10);
@@ -45,13 +45,13 @@ CREATE TABLE Application (
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 36, 85, 85, 6);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Approved', 37, 18, 18, 7);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 3, 81, 81, 4);
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 41, 32, 32, 13);
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 10, 83, 83, 12);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 41, 32, 32, 3);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 10, 83, 83, 2);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 20, 25, 25, 4);
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 49, 56, 56, 15);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 49, 56, 56, 5);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 14, 72, 72, 5);
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 32, 35, 35, 15);
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 49, 2, 2, 15);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 32, 35, 35, 5);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 49, 2, 2, 5);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 31, 64, 64, 5);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 35, 40, 40, 9);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 48, 55, 55, 3);
@@ -59,6 +59,6 @@ CREATE TABLE Application (
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Under Review', 24, 78, 78, 4);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 22, 87, 87, 3);
 -- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 31, 31, 31, 8);
--- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 45, 87, 87, 13);
+-- insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 45, 87, 87, 3);
 
 SELECT * FROM application;
