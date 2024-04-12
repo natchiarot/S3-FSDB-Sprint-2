@@ -1,3 +1,6 @@
+/* Font imports and definitions */
+@import url("https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&display=swap");
+
 /* General page settings */
 html {
   scroll-behavior: smooth;
@@ -12,9 +15,6 @@ body {
   color: #333;
   min-width: 380px;
 }
-
-/* Font imports and definitions */
-@import url("https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&display=swap");
 
 .content {
   padding-top: 0px;

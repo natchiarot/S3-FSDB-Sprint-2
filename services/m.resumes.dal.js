@@ -7,16 +7,21 @@ async function getAllResumes() {
     client = await mdb.connect();
 
     const database = client.db("ApplicantManagementDB");
-    const result = await database
+    let result = await database
       .collection("Application")
       .aggregate([])
       .toArray();
     if (DEBUG) console.log(`getAllResumes: found ${result.length} resumes`);
 
+    result = result.map((r) => {
+      return { ...r, source: "m" };
+    });
+
     const finalResult = {
       resume_id: result.resume.resume_id,
       applicantname: result.applicant.applicantname,
       resumetext: result.resume.resumetext,
+      source: item.source,
     };
 
     return finalResult;
@@ -35,10 +40,10 @@ async function getResumesByJob(jobIdString) {
   try {
     const jobId = parseInt(jobIdString);
     await mdb.connect();
-    const result = await mdb
+    let result = await mdb
       .db("ApplicantManagementDB")
       .collection("Application")
-      .findOne({ "job.job_id": jobId });
+      .find({ "job.job_id": jobId });
 
     if (DEBUG) console.log("Result: ", result);
 
@@ -47,10 +52,15 @@ async function getResumesByJob(jobIdString) {
       return [];
     }
 
+    result = result.map((r) => {
+      return { ...r, source: "m" };
+    });
+
     const finalResult = {
       resume_id: result.resume.resume_id,
       applicantname: result.applicant.applicantname,
       resumetext: result.resume.resumetext,
+      source: item.source,
     };
 
     // Returns the final result in an array of the final result (so it can work the same as the other functions with forEach)
@@ -70,16 +80,21 @@ async function searchAllResumes(terms) {
     const regex = new RegExp(terms.join(" "), "i");
 
     // Doing the search with regex
-    const result = await mdb
+    let result = await mdb
       .db("ApplicantManagementDB")
       .collection("Application")
       .find({ "resume.resumetext": { $regex: regex } })
       .toArray();
 
+    result = result.map((r) => {
+      return { ...r, source: "m" };
+    });
+
     const finalResult = result.map((item) => ({
       resume_id: item.resume.resume_id,
       applicantname: item.applicant.applicantname,
       resumetext: item.resume.resumetext,
+      source: item.source,
     }));
 
     return finalResult;
@@ -96,7 +111,7 @@ async function searchResumesByJob(jobIdString, terms) {
     const jobId = parseInt(jobIdString);
     const regex = new RegExp(terms.join(" "), "i");
     await mdb.connect();
-    const result = await mdb
+    let result = await mdb
       .db("ApplicantManagementDB")
       .collection("Application")
       .find({
@@ -106,6 +121,10 @@ async function searchResumesByJob(jobIdString, terms) {
         ],
       })
       .toArray();
+
+    result = result.map((r) => {
+      return { ...r, source: "m" };
+    });
 
     if (DEBUG)
       console.log(
@@ -118,6 +137,7 @@ async function searchResumesByJob(jobIdString, terms) {
       resume_id: item.resume.resume_id,
       applicantname: item.applicant.applicantname,
       resumetext: item.resume.resumetext,
+      source: item.source,
     }));
 
     return finalResult;
