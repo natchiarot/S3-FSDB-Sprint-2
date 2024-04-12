@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const { getUserByUsername } = require("../services/users.pg.dal");
 
-// POST to /users/signIn indicates a sign-in request
+// POST /users/signIn indicates a sign-in request
 router.post("/signIn", async (req, res) => {
   // Make sure the required information is in the request
   if (!req.body.username || !req.body.password) {
@@ -21,7 +21,7 @@ router.post("/signIn", async (req, res) => {
     else {
       // Attempt to authenticate the supplied password against the retrieved password hash
       if (await bcrypt.compare(req.body.password, authUser.password)) {
-        // Update the session
+        // If the password hashes match, login was successful. Update the session.
         req.session.loggedIn = true;
         req.session.user_id = authUser.user_id;
         req.session.username = authUser.username;
@@ -33,6 +33,7 @@ router.post("/signIn", async (req, res) => {
   }
 });
 
+// GET /users/logout immediately logs the user out
 router.get("/logout", async (req, res) => {
   // Log the user out by updating the session
   req.session.loggedIn = false;
@@ -56,6 +57,7 @@ router.get("/signIn", async (req, res) => {
   res.redirect("/users");
 });
 
+// GET /users/signUp shows a user registration form
 router.get("/signUp", async (req, res) => {
   res.render("signUp");
 });
