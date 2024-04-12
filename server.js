@@ -36,9 +36,15 @@ app.use((req, res, next) => {
   next();
 });
 
+// Function which prevents a route from being accessed if the user is not logged in
+const requireLoggedIn = (req, res, next) => {
+  if (req.session.loggedIn) next();
+  else res.status(403).send("Not Authenticated");
+};
+
 // use a router for any requests to /resumes
 const resumesRouter = require("./routes/resumes");
-app.use("/resumes", resumesRouter);
+app.use("/resumes", requireLoggedIn, resumesRouter);
 
 // Another router for resuests to /users
 // Note that this route handles user authentication
