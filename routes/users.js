@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const bcrypt = require("bcrypt");
-const { getUserByUsername } = require("../services/users.pg.dal");
+const { getUserByUsername, createUser } = require("../services/users.pg.dal");
 
 // POST /users/signIn indicates a sign-in request
 router.post("/signIn", async (req, res) => {
@@ -12,8 +12,6 @@ router.post("/signIn", async (req, res) => {
   } else {
     // Authenticate the user
     const authUser = await getUserByUsername(req.body.username);
-
-    console.log(authUser);
 
     // If authUser is an empty array, no matching user was found
     if (authUser.length == 0)
@@ -55,6 +53,46 @@ router.get("/", async (req, res) => {
 // GET /users/signIn redirects to /users and shows a login form
 router.get("/signIn", async (req, res) => {
   res.redirect("/users");
+});
+
+// POST /users/signin attempts to register a new user
+router.post("/signUp", async (req, res) => {
+  try {
+    // First, make sure all required fields have been submitted
+    if (
+      !req.body.username ||
+      !req.body.password ||
+      !req.body.psw_repeat ||
+      !req.body.position ||
+      !req.body.email ||
+      !req.body.phone ||
+      !req.body.location
+    ) {
+      res.status(401).end("All fields must be filled in");
+    } else if (req.body.password != req.body.psw_repeat)
+      // Next, make sure two passwords were submitted, and they match
+      res.status(401).end("Passwords don't match");
+    else {
+      const result = await createUser(
+        req.body.username,
+        req.body.password,
+        req.body.position,
+        req.body.email,
+        req.body.phone,
+        req.body.location
+      );
+
+      // If the result is "23505", there was a duplicate key violation - the username is already in use
+      if (result === "23505") {
+        res.status(401).end("That username is already in use");
+      }
+      // Otherwise, the user was created.
+      else res.redirect("/");
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).end(e);
+  }
 });
 
 // GET /users/signUp shows a user registration form
