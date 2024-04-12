@@ -7,7 +7,7 @@ CREATE TABLE "User" (
     Phone VARCHAR(15),
     Location VARCHAR(255),
     Password VARCHAR(255),
-    LastLogin TIMESTAMP
+    UNIQUE (UserName)
 );
 
 

@@ -6,7 +6,8 @@ CREATE TABLE "User" (
     Email VARCHAR(255),
     Phone VARCHAR(15),
     Location VARCHAR(255),
-    LastLogin TIMESTAMP
+    Password VARCHAR(255),
+    UNIQUE (UserName)
 );
 
 INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Sarah Davis', 'Engineering Manager', 'john.doe@example.com', '607-140-2479', '202 Maple Ln');
