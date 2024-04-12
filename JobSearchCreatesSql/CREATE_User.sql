@@ -6,7 +6,7 @@ CREATE TABLE "User" (
     Email VARCHAR(255),
     Phone VARCHAR(15),
     Location VARCHAR(255),
-    Password VARCHAR(255),
+    Password VARCHAR(255)
 );
 
 
