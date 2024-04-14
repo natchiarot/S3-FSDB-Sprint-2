@@ -39,7 +39,13 @@ app.use((req, res, next) => {
 // Function which prevents a route from being accessed if the user is not logged in
 const requireLoggedIn = (req, res, next) => {
   if (req.session.loggedIn) next();
-  else res.status(403).send("Not Authenticated");
+  else
+    res
+      .status(403)
+      .render("alert", {
+        heading: "403",
+        message: "You must be logged in to access that resource.",
+      });
 };
 
 // use a router for any requests to /resumes
@@ -50,6 +56,11 @@ app.use("/resumes", requireLoggedIn, resumesRouter);
 // Note that this route handles user authentication
 const usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
+
+// API router
+// Note that the API does not support authentication at this time
+const apiRouter = require("./routes/api");
+app.use("/api", apiRouter);
 
 // handle GET requests to root
 app.get("/", async (req, res) => {

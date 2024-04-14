@@ -13,18 +13,13 @@ async function getAllResumes() {
       .toArray();
     if (DEBUG) console.log(`m  getAllResumes: found ${result.length} resumes`);
 
-    result = result.map((r) => {
-      return { ...r, source: "m" };
+    let finalResults = [];
+
+    result.forEach((result) => {
+      finalResults.push({ ...result.resume, source: "m" });
     });
 
-    const finalResult = {
-      resume_id: result.resume.resume_id,
-      applicantname: result.applicant.applicantname,
-      resumetext: result.resume.resumetext,
-      source: item.source,
-    };
-
-    return finalResult;
+    return finalResults;
   } catch (e) {
     console.log(e);
     throw e;
