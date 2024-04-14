@@ -106,6 +106,21 @@ const updateUser = async (id, data) => {
   }
 };
 
+// Gets all users. Note that this function does not return user password hashes.
+const getAllUsers = async () => {
+  try {
+    const query =
+      'SELECT user_id, username, position, email, phone, location FROM "User"';
+
+    const result = await psql.query(query);
+
+    return result.rows;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+};
+
 const deleteUser = async (id) => {
   const query = 'DELETE FROM "User" WHERE user_id = $1';
 
@@ -125,4 +140,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  getAllUsers,
 };

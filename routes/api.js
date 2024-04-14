@@ -1,31 +1,21 @@
 const express = require("express");
 const router = express.Router();
 
-const mDal = require("../services/m.resumes.dal");
+// A very basic REST API endpoint.
+// Note that unlike the web portal, there is no authentication, and searches are not logged.
+// Additionally, only GET requests are supported. If a user wants to create a user account, they'll have to use the web portal. :)
+
 const pgDal = require("../services/resumes.pg.dal");
-const { logSearch } = require("../services/searchlog.pg.js");
+const mDal = require("../services/m.resumes.dal");
+const userDal = require("../services/users.pg.dal");
 
-// GET to "resumes/" renders a form to search for resumes
-router.get("/", async (req, res) => {
-  res.render("resumesIndex");
-});
-
-// GET to "resumes/search" expects a 'query' parameter containing words to search for.
-// For instance, resumes/search?query=node%20react
-router.get("/search", async (req, res) => {
+router.get("/resumes/search", async (req, res) => {
   // If no database was specified, show an alert
   if (!req.query.target)
-    res.status(401).render("alert", {
-      header: "No Database",
-      message: "No database was selected for this search.",
-    });
+    res.status(401).json({ message: "GET Request must include a target" });
   // If no search terms or job id were specified, show an alert
   else if (!req.query.query && !req.query.job)
-    res.render("alert", {
-      header: "No Parameters",
-      message:
-        "Search terms and/or a job ID must be specified for a resume search.",
-    });
+    res.status(401).json({ message: "Must include a search query or job id" });
   else
     try {
       // Search query is passed in as a plaintext string, with each term separated by whitespace
@@ -73,66 +63,80 @@ router.get("/search", async (req, res) => {
       if (req.query.job) filters["job"] = req.query.job;
 
       // Log this search, including terms, filters, and the user's id
-      logSearch(terms, filters, req.session.user_id);
+      // logSearch(terms, filters, req.session.user_id);
 
-      if (terms.length > 0)
-        resumes.forEach((resume) => {
-          terms.forEach(
-            (term) =>
-              (resume.resumetext = resume.resumetext.replace(
-                term,
-                '<span class="match">' + term + "</span>"
-              ))
-          );
-        });
-
-      res.render("resumeSearchResults", {
-        query: req.query.query || "",
-        job: req.query.job || "",
-        resumes: resumes,
-        target: req.query.target,
-      });
+      res.json(resumes);
     } catch (e) {
-      res.status(503).render("alert", {
-        header: "503",
-        message:
-          "There was an error when attempting to access the database: " + e,
+      res.status(503).json({
+        message: "There was an error when handling the request: " + e,
       });
     }
 });
 
-// GET a specific resume
-router.get("/:id", async (req, res) => {
+// GET for a specific resume
+router.get("/resumes/:id", async (req, res) => {
   try {
     if (
       !req.query.source ||
       (req.query.source != "m" && req.query.source != "pg")
     )
-      res.status(401).render("alert", {
-        heading: "401",
-        message:
-          "A source database must be specified for single resume lookup.",
+      res.status(401).json({
+        message: "Resume lookup must include a source database (pg or m)",
       });
     else {
-      const resume =
+      resume =
         req.query.source === "pg"
           ? await pgDal.getResume(req.params.id)
           : await mDal.getResume(req.params.id);
-
-      // Log the resume object
-      if (DEBUG) console.log("Resume object:", resume);
-
-      req.query.source === "pg"
-        ? res.render("resumeView", { resume: resume[0] })
-        : res.render("resumeView", { resume });
+      res.json(resume);
     }
   } catch (e) {
-    res.status(503).render("alert", {
-      heading: "503",
-      message:
-        "There was an error when attempting to access the database: " + e,
-    });
+    res.status(503).json({ message: "Internal server error: " + e });
   }
+});
+
+// GET to /resumes returns all resumes
+router.get("/resumes", async (req, res) => {
+  try {
+    // Use the getAllResumes function for both resules, and concatenate the results
+    const pgResumes = await pgDal.getAllResumes();
+    const mResumes = await mDal.getAllResumes();
+    const resumes = pgResumes.concat(mResumes);
+
+    res.json(resumes);
+  } catch (e) {
+    res.status(503).json({ message: "Internal server error: " + e });
+  }
+});
+
+// GET to /users returns all users, but not their passwords
+router.get("/users", async (req, res) => {
+  try {
+    const users = await userDal.getAllUsers();
+
+    res.json(users);
+  } catch (e) {
+    res.status(503).json({ message: "Internal server error: " + e });
+  }
+});
+
+// GET to /users:id returns a specific user
+router.get("/users/:id", async (req, res) => {
+  try {
+    // Get the requested user
+    const user = await userDal.getUserById(req.params.id);
+
+    // Strip the password from the result
+    delete user.password;
+
+    res.json(user);
+  } catch (e) {
+    res.status(503).json({ message: "Internal server error: " + e });
+  }
+});
+
+router.use("/", async (req, res) => {
+  res.status(404).json({ message: "Unknown API endpoint" });
 });
 
 module.exports = router;
