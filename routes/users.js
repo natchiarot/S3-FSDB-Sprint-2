@@ -4,6 +4,12 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const { getUserByUsername, createUser } = require("../services/users.pg.dal");
 
+const refreshLocals = (res, req) => {
+  res.locals.loggedIn = req.session.loggedIn || false;
+  res.locals.user_id = req.session.user_id || -1;
+  res.locals.username = req.session.username || "unauthenticated";
+};
+
 // POST /users/signIn indicates a sign-in request
 router.post("/signIn", async (req, res) => {
   // Make sure the required information is in the request
@@ -30,8 +36,15 @@ router.post("/signIn", async (req, res) => {
         req.session.user_id = authUser.user_id;
         req.session.username = authUser.username;
 
+        // Update the template locals so the next render will display accurate information
+        refreshLocals(res, req);
+
         // Go back to the home page - user should be able to see that they are logged in
-        res.redirect("/");
+        res.render("alert", {
+          heading: "Welcome, " + req.body.username + "!",
+          message:
+            "You have successfully logged in. You can search resumes by using the Search button in the natigation bar above.",
+        });
       } else
         res.status(403).render("alert", {
           heading: "401",
@@ -46,7 +59,14 @@ router.get("/logout", async (req, res) => {
   // Log the user out by updating the session
   req.session.loggedIn = false;
 
-  res.redirect("/");
+  // Update the template locals so the next render will display accurate information
+  refreshLocals(res, req);
+
+  res.render("alert", {
+    heading: "Logged out!",
+    message:
+      "You have logged out of the system, and can safely close this window. ",
+  });
 });
 
 // GET /users shows a login form
