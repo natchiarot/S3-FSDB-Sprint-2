@@ -63,7 +63,8 @@ router.get("/search", async (req, res) => {
       let filters = { target: req.query.target };
       if (req.query.job) filters["job"] = req.query.job;
 
-      logSearch(terms, filters);
+      // Log this search, including terms, filters, and the user's id
+      logSearch(terms, filters, req.session.user_id);
 
       res.render("resumeSearchResults", {
         query: req.query.query || "",
