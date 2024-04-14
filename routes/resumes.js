@@ -13,10 +13,19 @@ router.get("/", async (req, res) => {
 // GET to "resumes/search" expects a 'query' parameter containing words to search for.
 // For instance, resumes/search?query=node%20react
 router.get("/search", async (req, res) => {
-  // If no database was specified, redirect to resumes index
-  if (!req.query.target) res.redirect("/");
-  // If no search terms or job id were specified, redirect to resumes index
-  else if (!req.query.query && !req.query.job) res.redirect("/");
+  // If no database was specified, show an alert
+  if (!req.query.target)
+    res.status(401).render("alert", {
+      header: "No Database",
+      message: "No database was selected for this search.",
+    });
+  // If no search terms or job id were specified, show an alert
+  else if (!req.query.query && !req.query.job)
+    res.render("alert", {
+      header: "No Parameters",
+      message:
+        "Search terms and/or a job ID must be specified for a resume search.",
+    });
   else
     try {
       // Search query is passed in as a plaintext string, with each term separated by whitespace
@@ -70,9 +79,11 @@ router.get("/search", async (req, res) => {
         resumes: resumes,
       });
     } catch (e) {
-      res
-        .status(503)
-        .end("There was an error when attempting to access the database: " + e);
+      res.status(503).render("alert", {
+        header: "503",
+        message:
+          "There was an error when attempting to access the database: " + e,
+      });
     }
 });
 
@@ -93,9 +104,11 @@ router.get("/:id", async (req, res) => {
     // For MongoDB it has to be like this:
     res.render("resumeView", { resume });
   } catch (e) {
-    res
-      .status(503)
-      .end("There was an error when attempting to access the database: " + e);
+    res.status(503).render("alert", {
+      header: "503",
+      message:
+        "There was an error when attempting to access the database: " + e,
+    });
   }
 });
 

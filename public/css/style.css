@@ -384,6 +384,11 @@ h1 {
   margin: 20px;
 }
 
+.alert-div {
+  text-align: center;
+  margin: 20px;
+}
+
 .outer-container2 {
   display: flex;
   justify-content: center;
