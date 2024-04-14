@@ -11,7 +11,7 @@ async function getAllResumes() {
       .collection("Application")
       .aggregate([])
       .toArray();
-    if (DEBUG) console.log(`getAllResumes: found ${result.length} resumes`);
+    if (DEBUG) console.log(`m  getAllResumes: found ${result.length} resumes`);
 
     result = result.map((r) => {
       return { ...r, source: "m" };
@@ -76,14 +76,19 @@ async function getResumesByJob(jobIdString) {
 async function searchAllResumes(terms) {
   try {
     await mdb.connect();
-    // Creating the regex for the search terms, case insensitive
-    const regex = new RegExp(terms.join(" "), "i");
 
-    // Doing the search with regex
+    // Create a string containing search terms. Each term must be encapsulated in double quotes
+    // To facilitate this, search terms are first stripped of any double quotes
+    const searchText = terms.map((term) => '"' + term + '"').join(" ");
+
+    // Perform a search against a 'text' index
+    // Creation of the index on our database was performed using MongoDBCompass,
+    // but this could also have been accomplished using db.Application.createIndex(...) once
     let result = await mdb
       .db("ApplicantManagementDB")
       .collection("Application")
-      .find({ "resume.resumetext": { $regex: regex } })
+      .find({ $text: { $search: searchText } })
+      // .find({ "resume.resumetext": { $regex: regex } })
       .toArray();
 
     result = result.map((r) => {
@@ -109,16 +114,17 @@ async function searchAllResumes(terms) {
 async function searchResumesByJob(jobIdString, terms) {
   try {
     const jobId = parseInt(jobIdString);
-    const regex = new RegExp(terms.join(" "), "i");
+
+    // Create a string containing search terms. Each term must be encapsulated in double quotes
+    // To facilitate this, search terms are first stripped of any double quotes
+    const searchText = terms.map((term) => '"' + term + '"').join(" ");
+
     await mdb.connect();
     let result = await mdb
       .db("ApplicantManagementDB")
       .collection("Application")
       .find({
-        $and: [
-          { "resume.resumetext": { $regex: regex } },
-          { "job.job_id": jobId },
-        ],
+        $and: [{ $text: { $search: searchText } }, { "job.job_id": jobId }],
       })
       .toArray();
 
@@ -128,7 +134,7 @@ async function searchResumesByJob(jobIdString, terms) {
 
     if (DEBUG)
       console.log(
-        `searchResumesByJob(${jobId}): found ${
+        `m  searchResumesByJob(${jobId}): found ${
           result.length
         } matches for '${terms.join(", ")}'`
       );
@@ -161,7 +167,8 @@ async function getResume(resumeIdString) {
       .db("ApplicantManagementDB")
       .collection("Application")
       .findOne({ "resume.resume_id": resumeId });
-    if (DEBUG) console.log(`getResume(${resumeId}): found ${result} matches`);
+    if (DEBUG)
+      console.log(`m  getResume(${resumeId}): found ${result} matches`);
 
     const finalResult = {
       resume_id: result.resume.resume_id,
