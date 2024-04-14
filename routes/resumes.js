@@ -66,6 +66,17 @@ router.get("/search", async (req, res) => {
       // Log this search, including terms, filters, and the user's id
       logSearch(terms, filters, req.session.user_id);
 
+      if (terms.length > 0)
+        resumes.forEach((resume) => {
+          terms.forEach(
+            (term) =>
+              (resume.resumetext = resume.resumetext.replace(
+                term,
+                '<span class="match">' + term + "</span>"
+              ))
+          );
+        });
+
       res.render("resumeSearchResults", {
         query: req.query.query || "",
         job: req.query.job || "",

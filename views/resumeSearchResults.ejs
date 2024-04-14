@@ -22,7 +22,7 @@
         <li>
           #<%= resume.resume_id %> <%= resume.applicantname %> (source: <%=
           resume.source %>)<br />
-          <textarea disabled><%= resume.resumetext %></textarea>
+          <div class="searchResumeText"><%- resume.resumetext %></div> <%# Potentially dangerous, but none of the resumes in our mock data are intentionally malicious :) %>
         </li>
         <% } ) %>
       </ul>
