@@ -510,6 +510,10 @@ textarea {
   max-height: 200px;
 }
 
+.searchLabel {
+  width: 160px;
+}
+
 @media screen and (max-width: 1800px) {
   .header {
     height: auto; /* Adjusted height for responsiveness */

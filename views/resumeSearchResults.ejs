@@ -4,9 +4,9 @@
     <div class="inner-container1">
       <h2>Resumé Search</h2>
       <form action="/resumes/search" method="GET">
-        <label for="search">Search by keyword:</label>
+        <label class="searchLabel" for="search">Search by keyword:</label>
         <input type="text" id="search" name="query" value="<%= query %>" /><br />
-        <label for="search">Search by job ID:</label>
+        <label class="searchLabel" for="search">Search by job ID:</label>
         <input type="text" id="search-job" name="job" value="<%= job %>" /><br />
         <select id="database" name="target">
           <option value="pg" <%- target == "pg" ? "selected" : "" %>>PostgreSQL</option>
