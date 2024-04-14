@@ -66,8 +66,10 @@ router.get("/search", async (req, res) => {
       logSearch(terms, filters);
 
       res.render("resumeSearchResults", {
-        query: req.query.query,
+        query: req.query.query || "",
+        job: req.query.job || "",
         resumes: resumes,
+        target: req.query.target,
       });
     } catch (e) {
       res

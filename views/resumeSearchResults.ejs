@@ -1,31 +1,32 @@
 <%- include('partials/head') %>
-  <main>
-    <div class="outer-container">
-      <div class="inner-container1">
-        <h2>Resumé Search</h2>
-        <form action="/resumes/search" method="GET">
-          <label for="search">Search by keyword:</label>
-          <input type="text" id="search" name="query" />
-          <select id="database" name="target">
-            <option value="pg">PostgreSQL</option>
-            <option value="m">MongoDB</option>
-            <option value="all">Both</option>
-          </select>
-          <button type="submit">Search</button>
-        </form>
+<main>
+  <div class="outer-container">
+    <div class="inner-container1">
+      <h2>Resumé Search</h2>
+      <form action="/resumes/search" method="GET">
+        <label for="search">Search by keyword:</label>
+        <input type="text" id="search" name="query" value="<%= query %>" /><br />
+        <label for="search">Search by job ID:</label>
+        <input type="text" id="search-job" name="job" value="<%= job %>" /><br />
+        <select id="database" name="target">
+          <option value="pg" <%- target == "pg" ? "selected" : "" %>>PostgreSQL</option>
+          <option value="m" <%- target == "m" ? "selected" : "" %>>MongoDB</option>
+          <option value="all" <%- target == "all" ? "selected" : "" %>>Both</option>
+        </select>
+        <button type="submit">Search</button>
+      </form>
 
-        <%= resumes.length %> results for '<%= query %>':
-            <ul>
-              <% resumes.forEach(resume=> { %>
-                <li>
-                  #<%= resume.resume_id %>
-                    <%= resume.applicantname %> (source: <%= resume.source %>)<br />
-                        <textarea disabled>
-<%= resume.resumetext %></textarea>
-                </li>
-                <% } ) %>
-            </ul>
-      </div>
+      <%= resumes.length %> results for '<%= query %>':
+      <ul>
+        <% resumes.forEach(resume=> { %>
+        <li>
+          #<%= resume.resume_id %> <%= resume.applicantname %> (source: <%=
+          resume.source %>)<br />
+          <textarea disabled><%= resume.resumetext %></textarea>
+        </li>
+        <% } ) %>
+      </ul>
     </div>
-  </main>
-  <%- include('partials/foot') %>
+  </div>
+</main>
+<%- include('partials/foot') %>
