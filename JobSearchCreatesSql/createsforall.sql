@@ -1,29 +1,25 @@
 -- Create User table
 CREATE TABLE "User" (
     User_ID SERIAL PRIMARY KEY,
-    UserName VARCHAR(255),
+    UserName VARCHAR(255) NOT NULL UNIQUE,
     Position VARCHAR(255),
     Email VARCHAR(255),
     Phone VARCHAR(15),
     Location VARCHAR(255),
-    LastLogin TIMESTAMP
+    Password VARCHAR(255)
 );
 
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Sarah Davis', 'Engineering Manager', 'john.doe@example.com', '607-140-2479', '202 Maple Ln');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('David Thomas', 'Business Development Manager', 'user456@example.com', '896-847-6459', '456 Elm St');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Emily Johnson', 'Chief Technology Officer (CTO)', 'example.email@example.com', '696-501-4546', '101 Pine Rd');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Daniel Martinez', 'Chief Technology Officer (CTO)', 'example.email@example.com', '044-657-4935', '456 Elm St');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('William Anderson', 'IT Manager', 'example.email@example.com', '470-598-2220', '789 Oak Ave');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Robert Wilson', 'Chief Information Officer (CIO)', 'user456@example.com', '182-760-8565', '202 Maple Ln');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Emily Johnson', 'Director of User Experience', 'example.email@example.com', '048-589-2129', '101 Pine Rd');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Jessica Taylor', 'IT Manager', 'user456@example.com', '617-412-2987', '202 Maple Ln');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('James Hernandez', 'Technical Lead', 'testuser123@example.com', '087-366-6211', '202 Maple Ln');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('David Thomas', 'Software Development Manager', 'user456@example.com', '913-868-8682', '456 Elm St');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Laura Rodriguez', 'Product Manager', 'user456@example.com', '419-874-7561', '123 Main St');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Amanda Garcia', 'Director of Operations', 'example.email@example.com', '721-827-4042', '456 Elm St');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Laura Rodriguez', 'Chief Technology Officer (CTO)', 'user456@example.com', '334-018-3590', '456 Elm St');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('Jessica Taylor', 'Director of Information Technology', 'john.doe@example.com', '521-190-1113', '456 Elm St');
-INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('John Smith', 'Director of Information Technology', 'user456@example.com', '376-507-7348', '101 Pine Rd');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('SarahDavis', 'Engineering Manager', 'john.doe@example.com', '607-140-2479', '202 Maple Ln');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('DavidThomas', 'Business Development Manager', 'user456@example.com', '896-847-6459', '456 Elm St');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('EmilyJohnson', 'Chief Technology Officer (CTO)', 'example.email@example.com', '696-501-4546', '101 Pine Rd');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('DanielMartinez', 'Chief Technology Officer (CTO)', 'example.email@example.com', '044-657-4935', '456 Elm St');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('WilliamAnderson', 'IT Manager', 'example.email@example.com', '470-598-2220', '789 Oak Ave');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('RobertWilson', 'Chief Information Officer (CIO)', 'user456@example.com', '182-760-8565', '202 Maple Ln');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('JessicaTaylor', 'IT Manager', 'user456@example.com', '617-412-2987', '202 Maple Ln');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('JamesHernandez', 'Technical Lead', 'testuser123@example.com', '087-366-6211', '202 Maple Ln');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('LauraRodriguez', 'Product Manager', 'user456@example.com', '419-874-7561', '123 Main St');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('AmandaGarcia', 'Director of Operations', 'example.email@example.com', '721-827-4042', '456 Elm St');
+INSERT INTO "User" (UserName, Position, Email, Phone, Location) VALUES ('JohnSmith', 'Director of Information Technology', 'user456@example.com', '376-507-7348', '101 Pine Rd');
 
 
 -- Create Search_Logs table
@@ -239,14 +235,14 @@ CREATE TABLE Application (
     AssignedTo_User_ID INT REFERENCES "User"(User_ID)
 );
 
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 28, 83, 83, 15);
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 23, 84, 84, 15);
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 5, 90, 90, 12);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 28, 83, 83, 5);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 23, 84, 84, 5);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 5, 90, 90, 2);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 37, 58, 58, 3);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 26, 67, 67, 5);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 28, 1, 1, 9);
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 42, 60, 60, 15);
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 14, 99, 99, 13);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 42, 60, 60, 5);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 14, 99, 99, 3);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 27, 31, 31, 2);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 5, 102, 102, 7);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Under Review', 7, 39, 39, 10);
@@ -274,13 +270,13 @@ insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, Ass
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 36, 85, 85, 6);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Approved', 37, 18, 18, 7);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 3, 81, 81, 4);
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 41, 32, 32, 13);
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 10, 83, 83, 12);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 41, 32, 32, 3);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 10, 83, 83, 2);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 20, 25, 25, 4);
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 49, 56, 56, 15);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 49, 56, 56, 5);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 14, 72, 72, 5);
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 32, 35, 35, 15);
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 49, 2, 2, 15);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Applied', 32, 35, 35, 5);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 49, 2, 2, 5);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 31, 64, 64, 5);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Rejected', 35, 40, 40, 9);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Expired', 48, 55, 55, 3);
@@ -288,7 +284,7 @@ insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, Ass
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Under Review', 24, 78, 78, 4);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 22, 87, 87, 3);
 insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Cancelled', 31, 31, 31, 8);
-insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 45, 87, 87, 13);
+insert into Application (ApplicationStatus, Job_ID, Applicant_ID, Resume_ID, AssignedTo_User_ID) values ('Pending', 45, 87, 87, 3);
 
 -- Create Resume table
 CREATE TABLE Resume (
