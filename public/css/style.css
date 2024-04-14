@@ -515,6 +515,36 @@ textarea {
   max-height: 200px;
 }
 
+.searchLabel {
+  width: 160px;
+}
+
+.searchResumeText {
+  font-family: monospace;
+  margin: 0em;
+  padding: 2px;
+  max-height: 200px;
+  width: 100%;
+
+  background-color: #bfcfda;
+  color: #545454;
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.match {
+  font-weight: bold;
+  color: #d00;
+}
+
 @media screen and (max-width: 1800px) {
   .header {
     height: auto; /* Adjusted height for responsiveness */
